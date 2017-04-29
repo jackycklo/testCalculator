@@ -12,11 +12,11 @@ class ViewController: UIViewController {
     
     // ? ! both mean optional
     // ? default nil (not set)
-    @IBOutlet weak var display: UILabel!
+    @IBOutlet private weak var display: UILabel!
     
-    var userIsInTheMiddleOfTyping : Bool = false;
+    private var userIsInTheMiddleOfTyping : Bool = false;
 
-    @IBAction func touchDigit(_ sender: UIButton) {
+    @IBAction private func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
         if (userIsInTheMiddleOfTyping) {
             let textCurrentDisplay = display!.text!
@@ -29,19 +29,32 @@ class ViewController: UIViewController {
         print("touched \(digit) digit");
     }
     
-  
-    
-    @IBAction func performOperation(_ sender: UIButton) {
-        userIsInTheMiddleOfTyping = false;
-
-        if let mathematicalSymbol = sender.currentTitle {
-            if mathematicalSymbol == "pi" {
-                display.text = String(M_PI)//M_PI
-            }
+    private var displayValue: Double {
+        get {
+            return Double(display.text!)!
         }
-        
+        set {
+            display.text = String(newValue)
+        }
+    }
+    
+    private var brain = CalculatorBrain()
+    
+    @IBAction private func performOperation(_ sender: UIButton) {
+
+        if (userIsInTheMiddleOfTyping) {
+            brain.setOperand(operand: displayValue)
+            userIsInTheMiddleOfTyping = false;
+        }
+        if let mathematicalSymbol = sender.currentTitle {
+            brain.performOperation(symbol: mathematicalSymbol)
+        }
+        displayValue = brain.result;
     }
     
     
 }
 
+//√
+//SQUARE ROOT
+//Unicode: U+221A, UTF-8: E2 88 9A
