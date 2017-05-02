@@ -21,6 +21,7 @@ class ViewController: UIViewController {
             display.textAlignment = .center
 //            display.text = "widht " + String(traitCollection.horizontalSizeClass.rawValue) + " height " + String(traitCollection.verticalSizeClass.rawValue)
             
+            //branch
              display.text = "widht " + (traitCollection.horizontalSizeClass.description) + " height " + (traitCollection.verticalSizeClass.description)
         }
         
